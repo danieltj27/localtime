@@ -1,0 +1,15 @@
+services:
+    danieltj.localtime.listener:
+        class: danieltj\localtime\event\listener
+        arguments:
+            - '@language'
+            - '@template'
+            - '@danieltj.localtime.includes.functions'
+        tags:
+            - { name: event.listener }
+
+    danieltj.localtime.includes.functions:
+        class: danieltj\localtime\includes\functions
+        arguments:
+            - '@dbal.conn'
+            - '@user'
