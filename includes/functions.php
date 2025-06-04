@@ -34,40 +34,17 @@ final class functions {
 	}
 
 	/**
-	 * Return the local time string for the given user.
+	 * Returns a formatted timestamp of the current time.
 	 * 
-	 * @since 1.0.0
+	 * @since 1.0.0-b2
 	 * 
-	 * @param integer $user_id The ID of the user to search for.
+	 * @param  string $timezone A string representing a timezone selection.
 	 * 
-	 * @return string  A string containing the user's local time converted
-	 *                 into the format of the current authenticated user.
+	 * @return string           A formatted timestamp based on the given timezone.
 	 */
-	public function get_users_local_time( $user_id ) {
+	public function get_tz_current_time( $timezone = 'UTC' ) {
 
-		$user_id = (int) $user_id;
-
-		// Return blank string for invalid users.
-		if ( 0 === $user_id ) {
-
-			return '';
-
-		}
-
-		$result = $this->database->sql_query( 'SELECT user_timezone FROM ' . USERS_TABLE . ' WHERE ' . $this->database->sql_build_array( 'SELECT', [
-			'user_id' => (int) $user_id
-		] ) );
-
-		$user_data = $this->database->sql_fetchrow( $result );
-		$this->database->sql_freeresult( $result );
-
-		if ( false === $user_data ) {
-
-			return '';
-
-		}
-
-		$datetime = new \DateTime( 'now', new \DateTimeZone( $user_data[ 'user_timezone' ] ) );
+		$datetime = new \DateTime( 'now', new \DateTimeZone( $timezone ) );
 
 		// Convert the timestamp into the current user's datetime format.
 		return $datetime->format( str_replace( '|', '', $this->user->data[ 'user_dateformat' ] ) );

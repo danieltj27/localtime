@@ -48,9 +48,10 @@ class listener implements EventSubscriberInterface {
 
 		return [
 			'core.user_setup_after'				=> 'add_languages',
-			'core.memberlist_view_profile'		=> 'update_member_row_data',
-			'core.ucp_pm_view_messsage'			=> 'update_pm_row_data',
-			'core.viewtopic_modify_post_row'	=> 'update_post_row_data',
+			'core.memberlist_view_profile'		=> 'add_member_tpl_vars',
+			'core.ucp_pm_view_messsage'			=> 'add_pm_tpl_vars',
+			'core.viewtopic_post_rowset_data'	=> 'update_post_row_data',
+			'core.viewtopic_modify_post_row'	=> 'add_post_tpl_vars',
 		];
 
 	}
@@ -67,10 +68,10 @@ class listener implements EventSubscriberInterface {
 	/**
 	 * memberlist
 	 */
-	public function update_member_row_data( $event ) {
+	public function add_member_tpl_vars( $event ) {
 
 		$this->template->assign_vars( [
-			'LOCAL_TIME' => $this->functions->get_users_local_time( $event[ 'member' ][ 'user_id' ] )
+			'LOCAL_TIME' => $this->functions->get_tz_current_time( $event[ 'member' ][ 'user_timezone' ] ),
 		] );
 
 	}
@@ -78,10 +79,10 @@ class listener implements EventSubscriberInterface {
 	/**
 	 * includes/ucp/ucp_pm_viewmessage:view_message
 	 */
-	public function update_pm_row_data( $event ) {
+	public function add_pm_tpl_vars( $event ) {
 
 		$this->template->assign_vars( [
-			'AUTHOR_LOCAL_TIME' => $this->functions->get_users_local_time( $event[ 'message_row' ][ 'author_id' ] )
+			'AUTHOR_LOCAL_TIME'	=> $this->functions->get_tz_current_time( $event[ 'message_row' ][ 'user_timezone' ] ),
 		] );
 
 	}
@@ -91,8 +92,19 @@ class listener implements EventSubscriberInterface {
 	 */
 	public function update_post_row_data( $event ) {
 
+		$event[ 'rowset_data' ] = array_merge( $event[ 'rowset_data' ], [
+			'user_timezone' => $event[ 'row' ][ 'user_timezone' ],
+		] );
+
+	}
+
+	/**
+	 * viewtopic
+	 */
+	public function add_post_tpl_vars( $event ) {
+
 		$event[ 'post_row' ] = array_merge( $event[ 'post_row' ], [
-			'POSTER_LOCAL_TIME' => $this->functions->get_users_local_time( $event[ 'row' ][ 'user_id' ] ),
+			'POSTER_LOCAL_TIME' => $this->functions->get_tz_current_time( $event[ 'row' ][ 'user_timezone' ] ),
 		] );
 
 	}
