@@ -11,5 +11,4 @@ services:
     danieltj.localtime.includes.functions:
         class: danieltj\localtime\includes\functions
         arguments:
-            - '@dbal.conn'
             - '@user'

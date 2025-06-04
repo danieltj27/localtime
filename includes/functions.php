@@ -8,15 +8,9 @@
 
 namespace danieltj\localtime\includes;
 
-use phpbb\db\driver\driver_interface as database;
 use phpbb\user;
 
 final class functions {
-
-	/**
-	 * @var driver_interface
-	 */
-	protected $database;
 
 	/**
 	 * @var user
@@ -26,9 +20,8 @@ final class functions {
 	/**
 	 * Constructor
 	 */
-	public function __construct( database $database, user $user ) {
+	public function __construct( user $user ) {
 
-		$this->database = $database;
 		$this->user = $user;
 
 	}
@@ -46,8 +39,8 @@ final class functions {
 
 		$datetime = new \DateTime( 'now', new \DateTimeZone( $timezone ) );
 
-		// Convert the timestamp into the current user's datetime format.
-		return $datetime->format( str_replace( '|', '', $this->user->data[ 'user_dateformat' ] ) );
+		// Format timestamp and localise it for the current user.
+		return $this->user->format_date( $datetime->getTimestamp(), $this->user->data[ 'user_dateformat' ], true );
 
 	}
 
