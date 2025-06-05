@@ -27,20 +27,27 @@ final class functions {
 	}
 
 	/**
-	 * Returns a formatted timestamp of the current time.
+	 * Returns current localised time of a given timezone.
 	 * 
-	 * @since 1.0.0-b2
+	 * @since 1.0.0-b4
 	 * 
 	 * @param  string $timezone A string representing a timezone selection.
 	 * 
-	 * @return string           A formatted timestamp based on the given timezone.
+	 * @return string           A formatted and localised timestamp.
 	 */
-	public function get_tz_current_time( $timezone = 'UTC' ) {
+	public function get_l10n_local_time( $timezone = 'UTC' ) {
 
-		$datetime = new \DateTime( 'now', new \DateTimeZone( $timezone ) );
+		/**
+		 * Required for \phpbb\datetime wrapper.
+		 * 
+		 * @link https://www.php.net/manual/en/class.datetimezone.php
+		 */
+		$dtz = new \DateTimeZone( $timezone );
 
-		// Format timestamp and localise it for the current user.
-		return $this->user->format_date( $datetime->getTimestamp(), $this->user->data[ 'user_dateformat' ], true );
+		// phpBB wrapper class for php DateTime to localise timestamps.
+		$datetime = new \phpbb\datetime( $this->user, 'now', $dtz );
+
+		return $datetime->format( $this->user->data[ 'user_dateformat' ], true );
 
 	}
 

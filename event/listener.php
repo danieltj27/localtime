@@ -71,7 +71,7 @@ class listener implements EventSubscriberInterface {
 	public function add_member_tpl_vars( $event ) {
 
 		$this->template->assign_vars( [
-			'LOCAL_TIME' => $this->functions->get_tz_current_time( $event[ 'member' ][ 'user_timezone' ] ),
+			'LOCAL_TIME' => $this->functions->get_l10n_local_time( $event[ 'member' ][ 'user_timezone' ] ),
 		] );
 
 	}
@@ -82,7 +82,7 @@ class listener implements EventSubscriberInterface {
 	public function add_pm_tpl_vars( $event ) {
 
 		$this->template->assign_vars( [
-			'AUTHOR_LOCAL_TIME'	=> $this->functions->get_tz_current_time( $event[ 'message_row' ][ 'user_timezone' ] ),
+			'AUTHOR_LOCAL_TIME'	=> $this->functions->get_l10n_local_time( $event[ 'message_row' ][ 'user_timezone' ] ),
 		] );
 
 	}
@@ -104,7 +104,7 @@ class listener implements EventSubscriberInterface {
 	public function add_post_tpl_vars( $event ) {
 
 		$event[ 'post_row' ] = array_merge( $event[ 'post_row' ], [
-			'POSTER_LOCAL_TIME' => $this->functions->get_tz_current_time( $event[ 'row' ][ 'user_timezone' ] ),
+			'POSTER_LOCAL_TIME' => $this->functions->get_l10n_local_time( $event[ 'row' ][ 'user_timezone' ] ),
 		] );
 
 	}
