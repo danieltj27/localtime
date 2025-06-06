@@ -19,6 +19,12 @@
         "display-name": "Local Time",
         "soft-require": {
             "phpbb/phpbb": ">=3.3.15"
+        },
+        "version-check": {
+            "host": "www.phpbb.com",
+            "directory": "/customise/db/extension/local_time/",
+            "filename": "version_check",
+            "ssl": true
         }
     }
 }
