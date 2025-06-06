@@ -4,7 +4,7 @@ Display the user's local time on their profile.
 
 ## Features
 
-- Adds the user's local time based on their timezone setting to the topic, private message and profile pages of your forum.
+- Adds the user's local time based on their timezone setting to the view topic, view private message and profile pages of your forum.
 
 ## Install
 
