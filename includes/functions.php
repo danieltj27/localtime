@@ -29,8 +29,8 @@ final class functions {
 	/**
 	 * Returns current localised time of a given timezone.
 	 * 
-	 * @since 1.0.0-b4
-	 * @since 1.0.0-rc Catch exception for invalid timezones.
+	 * @since 1.0.0-b4 
+	 * @since 1.0.1    Catch exception for invalid timezones.
 	 * 
 	 * @param  string $timezone A string representing a timezone selection.
 	 * 

@@ -2,7 +2,7 @@
     "name": "danieltj/localtime",
     "type": "phpbb-extension",
     "description": "Display the user's local time on their profile.",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "GPL-2.0-only",
     "authors": [
         {
